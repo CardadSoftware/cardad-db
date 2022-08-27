@@ -64,4 +64,4 @@ const TechnicianModel = mongoose.model('Technician', technicianSchema);
 
 const VehicleModel = mongoose.model('Vehicle', vehicleSchema);
 
-export {UserModel, TechnicianModel, VehicleModel};
+export { UserModel, TechnicianModel, VehicleModel };
