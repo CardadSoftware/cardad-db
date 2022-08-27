@@ -30,8 +30,8 @@ const userSchema = new Schema({
         provider: {type: String, required: true},
     },
     createDate: {type: Date, default: Date.now()},
-    active: { type: Boolean, default: true}
-
+    active: { type: Boolean, default: true},
+    online: Boolean
 }
 );
 
@@ -51,5 +51,17 @@ const Specialty = new Schema({
 
 const technicianSchema = new Schema({
     ...userSchema.obj,
-    specialties: {type: [Specialty], default: [{value: 'None'}]}
+    specialties: {type: [Specialty], default: [{value: 'None'}]},
+    bookable: Boolean,
+    rating: {type: Number, enum: [1,2,3,4,5]},
+    certifications: [String],
+    company: String
 });
+
+const UserModel = mongoose.model('User', userSchema);
+
+const TechnicianModel = mongoose.model('Technician', technicianSchema);
+
+const VehicleModel = mongoose.model('Vehicle', vehicleSchema);
+
+export {UserModel, TechnicianModel, VehicleModel};
