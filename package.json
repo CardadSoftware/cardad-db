@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/crackpotmgee/cardad-db#readme",
   "dependencies": {
+    "esm": "^3.2.25",
     "mongoose": "^6.5.3"
   }
 }

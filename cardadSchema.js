@@ -1,5 +1,7 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
+
+const db = mongoose;
 
 var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -58,10 +60,13 @@ const technicianSchema = new Schema({
     company: String
 });
 
-const UserModel = mongoose.model('User', userSchema);
+const UserModel = db.model('User', userSchema);
 
-const TechnicianModel = mongoose.model('Technician', technicianSchema);
+const TechnicianModel = db.model('Technician', technicianSchema);
 
-const VehicleModel = mongoose.model('Vehicle', vehicleSchema);
+const VehicleModel = db.model('Vehicle', vehicleSchema);
 
-export {UserModel, TechnicianModel, VehicleModel};
+exports.VehicleModel = VehicleModel;
+exports.UserModel = UserModel;
+exports.TechnicianModel = TechnicianModel;
+exports.db = db;
