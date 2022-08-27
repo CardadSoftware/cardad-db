@@ -1,0 +1,22 @@
+{
+  "name": "cardad-db",
+  "version": "1.0.0",
+  "description": "Database Schema for cardad",
+  "main": "cardadSchema.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crackpotmgee/cardad-db.git"
+  },
+  "author": "Anthony Stoute",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crackpotmgee/cardad-db/issues"
+  },
+  "homepage": "https://github.com/crackpotmgee/cardad-db#readme",
+  "dependencies": {
+    "mongoose": "^6.5.3"
+  }
+}
