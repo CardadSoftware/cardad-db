@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const passportLocalMongoose = require('passport-local-mongoose');
+
+//Set up default mongoose connection
+const mongoDB = 'mongodb://127.0.0.1:27017';
 
 const db = mongoose;
+
+db.connect(mongoDB, { dbName:"cardad", useNewUrlParser: true, useUnifiedTopology: true, user: "cardadAPI", pass: "rP&7ZxRz63uEsPe1cq426R9"},(err) => {if(err){console.log("Enable to connect to DB: " + err.message + " stack: " + err.stack);} else{console.log("Connected to DB");}});
+
 
 var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -23,19 +30,21 @@ const userSchema = new Schema({
         trim: true,
         lowercase: true,
         unique: true,
-        required: 'Email address is required',
+        required: false,
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-    password: { type: String, required: true },
+    password: { type: String},
     federatedCred: {
-        provider: {type: String, required: true},
+        provider: {type: String},
     },
     createDate: {type: Date, default: Date.now()},
     active: { type: Boolean, default: true},
     online: Boolean
 }
 );
+
+userSchema.plugin(passportLocalMongoose);
 
 const vehicleSchema = new Schema({
     name: { type: String, required: true },
