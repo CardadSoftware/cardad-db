@@ -31,20 +31,31 @@ const userSchema = new Schema({
         lowercase: true,
         unique: true,
         required: false,
+        sparse: true,
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-    password: { type: String},
-    federatedCred: {
-        provider: {type: String},
-    },
     createDate: {type: Date, default: Date.now()},
     active: { type: Boolean, default: true},
-    online: Boolean
+    online: Boolean,
+    salt: String,
+    hash: String
 }
 );
 
 userSchema.plugin(passportLocalMongoose);
+
+const shopSchema = new Schema({
+    name: String,
+    address: {
+        streetAddress: String,
+        city: String,
+        zip: String,
+        state: String
+    },
+    owner: String,
+
+});
 
 const vehicleSchema = new Schema({
     name: { type: String, required: true },
@@ -55,9 +66,9 @@ const vehicleSchema = new Schema({
     licNumber: String,
     mileage: Number
     });
-
+const specialties = ['None','Engine','Transmission','Auto Body', 'Paint', 'Upholstery'];
 const Specialty = new Schema({
-    value: {type: String, enum: ['None','Engine','Transmission','Auto Body', 'Paint', 'Upholstery']}
+    value: {type: String, enum: specialties}
 });
 
 const technicianSchema = new Schema({
@@ -69,13 +80,77 @@ const technicianSchema = new Schema({
     company: String
 });
 
+const calculateTotal = () => 1;
+
+const invoiceSchema = new Schema(
+    {
+        invoiceName: String,
+        description: String,
+        referenceNumber: String,
+        totalCharge: Number,
+        charges: [
+            {
+               type: Schema.Types.ObjectId, ref: 'Charge' 
+            }],
+    }
+);
+
+const chargeSchema = new Schema({
+    description: { type: String, required: true },
+    quantity: Number,
+    rateType: {type: String, enum:['hour','piece','job']},
+    rate: { type: Number, required: true},
+    discount: Number
+});
+
+const payToSchema = new Schema(
+    {
+        name: String,
+        shops: [{ type: Schema.Types.ObjectId, ref:'Shop'}],
+        paymentTerms: String
+    });
+
+const jobSchema = new Schema({
+    jobName: String,
+    invoices: [
+        {type: Schema.Types.ObjectId, ref:'Invoice'}
+    ],
+    cusotmer: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+
+});
+// add virtual prop for total charges
+chargeSchema.virtual('totalCharges').get(() => 
+{this.invoices.map(val => 
+    {
+        return {total: val.charges.map( tot => tot.quantity * tot.rate ,[]).reduce((a,b) => 
+        {
+            return a + b;
+        },[] )};
+    })
+});
+
+const InvoiceModel = db.Model('Invoice', invoiceSchema);
+
+const PayToModel = db.Model('PayTo', payToSchema);
+
+const ChargeModel = db.model('Charge', chargeSchema);
+
+const ShopModel = db.model('Shop', shopSchema);
+
+const JobModel = db.model('Job', jobSchema);
+
 const UserModel = db.model('User', userSchema);
 
 const TechnicianModel = db.model('Technician', technicianSchema);
 
 const VehicleModel = db.model('Vehicle', vehicleSchema);
 
+exports.InvoiceModel = InvoiceModel;
+exports.PayToModel = PayToModel;
 exports.VehicleModel = VehicleModel;
 exports.UserModel = UserModel;
 exports.TechnicianModel = TechnicianModel;
+exports.JobModel = JobModel;
+exports.ShopModel = ShopModel;
+exports.ChargeModel = ChargeModel;
 exports.db = db;
