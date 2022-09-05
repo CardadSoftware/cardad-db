@@ -129,9 +129,9 @@ chargeSchema.virtual('totalCharges').get(() =>
     })
 });
 
-const InvoiceModel = db.Model('Invoice', invoiceSchema);
+const InvoiceModel = db.model('Invoice', invoiceSchema);
 
-const PayToModel = db.Model('PayTo', payToSchema);
+const PayToModel = db.model('PayTo', payToSchema);
 
 const ChargeModel = db.model('Charge', chargeSchema);
 
