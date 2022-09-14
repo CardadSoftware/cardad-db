@@ -80,7 +80,22 @@ const technicianSchema = new Schema({
     company: String
 });
 
-const calculateTotal = () => 1;
+const carMakeSchema = new Schema(
+    {
+        makeId: { type: Number, required: true},
+        makeName: { type: String, required: true } ,
+        vehicleTypeId: { type: Number, required: true },
+        vehicleTypeName: { type: String, required: true},
+        models: {type: [{ type: Schema.Types.ObjectId, ref: 'CarModel'}]}
+    }
+);
+
+const carModelSchema = new Schema(
+    {
+        modelId: {type: Number, required: true},
+        modelName: {type: String, required: true}
+    }
+);
 
 const invoiceSchema = new Schema(
     {
@@ -97,11 +112,15 @@ const invoiceSchema = new Schema(
 
 const chargeSchema = new Schema({
     description: { type: String, required: true },
-    quantity: Number,
+    quantity: {type: Number, default: 1},
     rateType: {type: String, enum:['hour','piece','job']},
-    rate: { type: Number, required: true},
-    discount: Number
-});
+    rate: { type: Number, required: true, default: 0},
+    discount: Number,
+    createDate: {type: Date, default: Date.now()}
+},{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  });
 
 const payToSchema = new Schema(
     {
@@ -119,14 +138,9 @@ const jobSchema = new Schema({
 
 });
 // add virtual prop for total charges
-chargeSchema.virtual('totalCharges').get(() => 
-{this.invoices.map(val => 
-    {
-        return {total: val.charges.map( tot => tot.quantity * tot.rate ,[]).reduce((a,b) => 
-        {
-            return a + b;
-        },[] )};
-    })
+chargeSchema.virtual('totalCharge').get(function()
+{
+    return (this.quantity || 1) * this.rate;
 });
 
 const InvoiceModel = db.model('Invoice', invoiceSchema);
@@ -145,6 +159,9 @@ const TechnicianModel = db.model('Technician', technicianSchema);
 
 const VehicleModel = db.model('Vehicle', vehicleSchema);
 
+const CarMakeModel = db.model('CarMaKe', carMakeSchema);
+const CarModelModel = db.model('CarModel', carModelSchema);
+
 exports.InvoiceModel = InvoiceModel;
 exports.PayToModel = PayToModel;
 exports.VehicleModel = VehicleModel;
@@ -153,4 +170,6 @@ exports.TechnicianModel = TechnicianModel;
 exports.JobModel = JobModel;
 exports.ShopModel = ShopModel;
 exports.ChargeModel = ChargeModel;
+exports.CarMakeModel = CarMakeModel;
+exports.CarModelModel = CarModelModel;
 exports.db = db;
