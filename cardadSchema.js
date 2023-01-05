@@ -92,6 +92,7 @@ const carMakeSchema = new Schema(
 
 const carModelSchema = new Schema(
     {
+        makeId: {type: Number, required: true},
         modelId: {type: Number, required: true},
         modelName: {type: String, required: true}
     }
