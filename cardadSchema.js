@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const crypto = require('node:crypto');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 //Set up default mongoose connection
@@ -43,6 +44,28 @@ const userSchema = new Schema({
 }
 );
 
+const clientSchema = new Schema(
+    {
+        name: String,
+        clientId: String,
+        clientSecret: {
+            salt: String,
+            hash: String
+        },
+        tenantId: String,
+        methods:{
+            generateClientSecret(){
+                            }
+        }
+    });
+clientSchema.methods.generateClientSecret = function(){
+    var clientSecretString = crypto.randomBytes(16)
+    .toString('base64')
+    .slice(0, 16);
+    this.clientSecret.salt = crypto.randomBytes(16).toString('hex');
+    this.clientSecret.hash = crypto.pbkdf2Sync(clientSecretString, this.clientSecret.salt, 1000, 64).toString('hex');
+
+};
 userSchema.plugin(passportLocalMongoose);
 
 const shopSchema = new Schema({
