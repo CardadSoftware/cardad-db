@@ -52,20 +52,23 @@ const clientSchema = new Schema(
             salt: String,
             hash: String
         },
-        tenantId: String,
-        methods:{
-            generateClientSecret(){
-                            }
-        }
+        tenantId: String
     });
-clientSchema.methods.generateClientSecret = function(){
+clientSchema.methods.generateClientSecret = () => {
     var clientSecretString = crypto.randomBytes(16)
     .toString('base64')
     .slice(0, 16);
     this.clientSecret.salt = crypto.randomBytes(16).toString('hex');
     this.clientSecret.hash = crypto.pbkdf2Sync(clientSecretString, this.clientSecret.salt, 1000, 64).toString('hex');
-
 };
+
+const accessTokenSchema = new Schema(
+    {
+        accessToken: { type: String, required: true },
+        refreshToken: String,
+        client: {type: Schema.Types.clientSchema, required: true},
+        user: {type: Schema.Types.UserModel, required: true}
+    });
 userSchema.plugin(passportLocalMongoose);
 
 const shopSchema = new Schema({
@@ -183,8 +186,13 @@ const TechnicianModel = db.model('Technician', technicianSchema);
 
 const VehicleModel = db.model('Vehicle', vehicleSchema);
 
-const CarMakeModel = db.model('CarMaKe', carMakeSchema);
+const CarMakeModel = db.model('CarMake', carMakeSchema);
+
 const CarModelModel = db.model('CarModel', carModelSchema);
+
+const ClientModel = db.model('Client', clientSchema);
+
+const AccessTokenModel = db.model('AccessToken', accessTokenSchema);
 
 exports.InvoiceModel = InvoiceModel;
 exports.PayToModel = PayToModel;
@@ -196,4 +204,6 @@ exports.ShopModel = ShopModel;
 exports.ChargeModel = ChargeModel;
 exports.CarMakeModel = CarMakeModel;
 exports.CarModelModel = CarModelModel;
+exports.ClientModel = ClientModel;
+exports.AccessTokenModel = AccessTokenModel;
 exports.db = db;
