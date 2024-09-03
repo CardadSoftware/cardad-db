@@ -161,7 +161,7 @@ const jobSchema = new Schema({
     invoices: [
         {type: Schema.Types.ObjectId, ref:'Invoice'}
     ],
-    cusotmer: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    customer: {type: Schema.Types.ObjectId, ref: 'User', required: true},
 
 });
 // add virtual prop for total charges
