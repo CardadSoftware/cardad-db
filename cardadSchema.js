@@ -66,9 +66,10 @@ const accessTokenSchema = new Schema(
     {
         accessToken: { type: String, required: true },
         refreshToken: String,
-        client: {type: Schema.Types.clientSchema, required: true},
-        user: {type: Schema.Types.UserModel, required: true}
+        client: {type: clientSchema, required: true},
+        user: {type: userSchema, required: true}
     });
+
 userSchema.plugin(passportLocalMongoose);
 
 const shopSchema = new Schema({
