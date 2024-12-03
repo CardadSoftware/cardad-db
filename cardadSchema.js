@@ -3,14 +3,6 @@ const { Schema } = mongoose;
 const crypto = require('node:crypto');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-//Set up default mongoose connection
-const mongoDB = 'mongodb://127.0.0.1:27017';
-
-const db = mongoose;
-
-db.connect(mongoDB, { dbName:"cardad", useNewUrlParser: true, useUnifiedTopology: true, user: "cardadAPI", pass: "rP&7ZxRz63uEsPe1cq426R9"},(err) => {if(err){console.log("Enable to connect to DB: " + err.message + " stack: " + err.stack);} else{console.log("Connected to DB");}});
-
-
 var validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email)
@@ -171,29 +163,29 @@ chargeSchema.virtual('totalCharge').get(function()
     return (this.quantity || 1) * this.rate;
 });
 
-const InvoiceModel = db.model('Invoice', invoiceSchema);
+const InvoiceModel = mongoose.model('Invoice', invoiceSchema);
 
-const PayToModel = db.model('PayTo', payToSchema);
+const PayToModel = mongoose.model('PayTo', payToSchema);
 
-const ChargeModel = db.model('Charge', chargeSchema);
+const ChargeModel = mongoose.model('Charge', chargeSchema);
 
-const ShopModel = db.model('Shop', shopSchema);
+const ShopModel = mongoose.model('Shop', shopSchema);
 
-const JobModel = db.model('Job', jobSchema);
+const JobModel = mongoose.model('Job', jobSchema);
 
-const UserModel = db.model('User', userSchema);
+const UserModel = mongoose.model('User', userSchema);
 
-const TechnicianModel = db.model('Technician', technicianSchema);
+const TechnicianModel = mongoose.model('Technician', technicianSchema);
 
-const VehicleModel = db.model('Vehicle', vehicleSchema);
+const VehicleModel = mongoose.model('Vehicle', vehicleSchema);
 
-const CarMakeModel = db.model('CarMake', carMakeSchema);
+const CarMakeModel = mongoose.model('CarMake', carMakeSchema);
 
-const CarModelModel = db.model('CarModel', carModelSchema);
+const CarModelModel = mongoose.model('CarModel', carModelSchema);
 
-const ClientModel = db.model('Client', clientSchema);
+const ClientModel = mongoose.model('Client', clientSchema);
 
-const AccessTokenModel = db.model('AccessToken', accessTokenSchema);
+const AccessTokenModel = mongoose.model('AccessToken', accessTokenSchema);
 
 exports.InvoiceModel = InvoiceModel;
 exports.PayToModel = PayToModel;
@@ -207,4 +199,3 @@ exports.CarMakeModel = CarMakeModel;
 exports.CarModelModel = CarModelModel;
 exports.ClientModel = ClientModel;
 exports.AccessTokenModel = AccessTokenModel;
-exports.db = db;

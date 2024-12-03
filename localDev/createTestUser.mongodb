@@ -1,0 +1,3 @@
+use("cardad");
+
+db.createUser({ user: "cardadAPI_test", pwd: "rP&7ZxRz63uEsPe1cq426R9", roles: [{ role: "readWrite", db: "cardad" }] })

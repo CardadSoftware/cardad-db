@@ -16,6 +16,7 @@
     "url": "https://github.com/crackpotmgee/cardad-db/issues"
   },
   "homepage": "https://github.com/crackpotmgee/cardad-db#readme",
+  "types": "index.d.ts",
   "dependencies": {
     "esm": "^3.2.25",
     "mongoose": "^6.13.5",
