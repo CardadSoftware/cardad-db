@@ -1,39 +1,32 @@
-import mongoose, { Types, ConnectOptions } from 'mongoose';
+import { Model, Schema } from "mongoose";
+import {
+    IUser,
+    ITechnician,
+    IClient,
+    IAccessToken,
+    IShop,
+    IVehicle,
+    IJob,
+    IInvoice,
+    ICharge,
+    IPayTo,
+    ICarMake,
+    ICarModel,
+} from "./cardadSchema"; // Import interfaces from cardadSchema
 
-export declare function connectDB(uri: string, options?: ConnectOptions): Promise<void>; // Declares the connectDB function
+// Re-export interfaces
+export { IUser, ITechnician, IClient, IAccessToken, IShop, IVehicle, IJob, IInvoice, ICharge, IPayTo, ICarMake, ICarModel };
 
-export declare class JobModel{
-    _id: Types.ObjectId;
-    jobName: String;
-    invoices?: [any];
-    customer: UserModel
-}
-
-export declare class ApiSetting{
-    baseUrl: String;
-}
-
-export declare class AppSettingsSchema{
-    _id: Types.ObjectId;
-    name: String;
-    apiSettings?: ApiSetting;
-}
-
-export declare class UserModel{
-    _id: Types.ObjectId;
-    username: String;
-    firstName: String;
-    lastName: String;
-    contacts?: [{
-        contactType: String,
-        phoneNumber: String,
-        phoneExtension: String,
-        primary: Boolean
-    }];
-    email: String;
-    createDate: Date;
-    active: Boolean;
-    online: Boolean;
-    salt: String;
-    hash: String;
-}
+// Models
+export declare const InvoiceModel: Model<IInvoice>;
+export declare const PayToModel: Model<IPayTo>;
+export declare const VehicleModel: Model<IVehicle>;
+export declare const UserModel: Model<IUser>;
+export declare const TechnicianModel: Model<ITechnician>;
+export declare const JobModel: Model<IJob>;
+export declare const ShopModel: Model<IShop>;
+export declare const ChargeModel: Model<ICharge>;
+export declare const CarMakeModel: Model<ICarMake>;
+export declare const CarModelModel: Model<ICarModel>;
+export declare const ClientModel: Model<IClient>;
+export declare const AccessTokenModel: Model<IAccessToken>;
