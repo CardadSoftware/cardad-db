@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import crypto from "crypto";
 import passportLocalMongoose from "passport-local-mongoose";
 import {IAccessToken, ICarMake, ICarModel, ICharge, IClient, IInvoice, IJob, IPayTo, IShop, ITechnician, IUser, IVehicle} from "../interfaces";
