@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
     "declaration": true,
-    "declarationDir": "dist/types",
-    "emitDeclarationOnly": false,
     "outDir": "dist",
-    "module": "CommonJS", // or "ESNext"
-    "target": "ES6",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-
+    "forceConsistentCasingInFileNames": true,
+    "declarationDir": "dist/types",
+    "emitDeclarationOnly": false,
+    "rootDir": "src"
   },
-  "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
