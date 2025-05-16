@@ -7,6 +7,7 @@ export interface IJob extends Document {
     invoices: IInvoice[];
     customer: IUser;
     vehicle?: IVehicle;
+    jobStatus: string;
     issueDetails?: {
         issueDescription: string;
         urgency: string;
