@@ -1,9 +1,8 @@
-import { Document } from "mongoose";
 import { IInvoice } from "./IInvoice";
 import { IUser } from "./IUser";
 import { IVehicle } from "./IVehicle";
 
-export interface IJob extends Document {
+export interface IJob {
     jobName: string;
     invoices: IInvoice[]; // Use IInvoice directly
     customer: IUser; // Use IUser directly

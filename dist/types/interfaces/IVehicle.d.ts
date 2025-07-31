@@ -1,5 +1,4 @@
-import { Document } from "mongoose";
-export interface IVehicle extends Document {
+export interface IVehicle {
     name: string;
     model?: string;
     make?: string;

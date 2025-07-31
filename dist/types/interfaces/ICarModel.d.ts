@@ -1,6 +1,5 @@
-import { Document } from "mongoose";
 import { ICarMake } from "./ICarMake";
-export interface ICarModel extends Document {
+export interface ICarModel {
     make: ICarMake;
     model: string;
     year: number;
@@ -9,8 +8,4 @@ export interface ICarModel extends Document {
     transmission?: string;
     fuelType?: string;
     features?: string[];
-    vin: string;
-    licensePlate: string;
-    color?: string;
-    mileage?: number;
 }

@@ -1,5 +1,4 @@
-import { Document } from "mongoose";
-export interface ICarMake extends Document {
+export interface ICarMake {
     name: string;
     country?: string;
     establishedYear?: number;

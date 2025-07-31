@@ -1,5 +1,4 @@
-import { Document } from "mongoose";
-export interface IPayTo extends Document {
+export interface IPayTo {
     name: string;
     accountNumber: string;
     bankName: string;

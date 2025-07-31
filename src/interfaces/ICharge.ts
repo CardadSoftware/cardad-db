@@ -1,6 +1,4 @@
-import { Document } from "mongoose";
-
-export interface ICharge extends Document {
+export interface ICharge {
     description: string;
     quantity?: number;
     rateType?: "hour" | "piece" | "job";

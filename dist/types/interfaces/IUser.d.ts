@@ -1,5 +1,4 @@
-import { Document } from "mongoose";
-export interface IUser extends Document {
+export interface IUser {
     username: string;
     firstName?: string;
     lastName?: string;
