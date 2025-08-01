@@ -1,4 +1,7 @@
+import { Types } from "mongoose";
+
 export interface IClient {
+    _id: Types.ObjectId;
     name: string;
     clientId: string;
     clientSecret: {

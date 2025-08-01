@@ -1,8 +1,10 @@
+import { Types } from "mongoose";
 import { ICarMake } from "./ICarMake";
 
 export interface ICarModel {
-    make: ICarMake; // Use ICarMake directly
-    model: string;
+    _id: Types.ObjectId
+    make: ICarMake;
+    name: string;
     year: number;
     bodyStyle?: string;
     engineType?: string;

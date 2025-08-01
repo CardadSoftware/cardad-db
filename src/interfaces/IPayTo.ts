@@ -1,4 +1,7 @@
+import { Types } from "mongoose";
+
 export interface IPayTo {
+    _id: Types.ObjectId;
     name: string;
     accountNumber: string;
     bankName: string;

@@ -148,7 +148,7 @@ const CarMakeSchema = new Schema<ICarMake>({
 
 const CarModelSchema = new Schema<ICarModel>({
     make: { type: Schema.Types.ObjectId, ref: "CarMake", required: true }, // Reference to CarMake
-    model: { type: String, required: true },
+    name: { type: String, required: true },
     year: { type: Number, required: true },
     bodyStyle: { type: String }, // Optional body style
     engineType: { type: String }, // Optional engine type
